@@ -9,21 +9,23 @@ Traxy is a versatile collection of scripts designed for various cybersecurity ac
 Python Version: 3.11
 
 ## Install Program :
+```bash
 git clone https://github.com/505LabCenter/Traxy
-
+```
 
 ### Install Dependencies
+```bash
 cd SnoopTools
 apt install python-cryptography
 pip3 install beautifulsoup4
+```
 
 ## Usage
 Run the main script using:
-
+```bash
 python3 traxy.py
-
+```
 ## Credits
 
 - Author: @505Snoop (https://github.com/505Snoop)
 - Contributor: @505Lab
-```
