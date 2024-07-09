@@ -15,7 +15,7 @@ git clone https://github.com/505LabCenter/Traxy
 
 ### Install Dependencies
 ```bash
-cd SnoopTools
+cd Traxy
 apt install python-cryptography
 pip3 install beautifulsoup4
 ```
